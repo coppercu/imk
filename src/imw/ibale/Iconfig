@@ -1,0 +1,3 @@
+config IBALE
+	bool
+	default y
