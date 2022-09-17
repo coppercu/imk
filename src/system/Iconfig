@@ -1,0 +1,6 @@
+menu "system≤„module≈‰÷√"
+
+rsource "affirm.kcb"
+rsource "dialog.kcb"
+
+endmenu

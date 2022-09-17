@@ -1,0 +1,8 @@
+menuconfig SNAPER
+	bool "数据快照"
+	default y	if !NATIVE
+if SNAPER
+	config SNAPER_GARRET
+		bool "使用GARRET保存快照"
+		default n if GARRET
+endif
