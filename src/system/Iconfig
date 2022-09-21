@@ -1,4 +1,4 @@
-menu "system≤„module≈‰÷√"
+menu "system"
 
 rsource "affirm.kcb"
 rsource "dialog.kcb"
