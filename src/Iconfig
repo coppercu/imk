@@ -1,0 +1,6 @@
+menu "imk"
+     rsource "imw/Iconfig"
+     rsource "skinio/Iconfig"
+     rsource "system/Iconfig"
+     rsource "treaty/Iconfig"
+endmenu
