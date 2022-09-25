@@ -1,7 +1,3 @@
-if [ -z ${1} ]; then
-    read -p "没有项目路径参数, 请输入任意建退出" none
-    exit
-fi
 
 # 提取项目信息
 entity_path=${1}
