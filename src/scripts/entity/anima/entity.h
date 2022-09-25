@@ -1,9 +1,9 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#define ICOUPIG_DEMO
-#define ICONFIG_DEMO
+#define ICOUPIG_SAMPLE
+#define ICONFIG_SAMPLE
 
-#define ICONFIG_ENTITY      "demo"
+#define ICONFIG_ENTITY      "sample"
 
 #endif // __ENTITY_H__

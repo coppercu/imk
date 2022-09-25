@@ -1,3 +1,8 @@
+if [ -z ${1} ]; then
+    read -p "没有项目路径参数, 请输入任意建退出" none
+    exit
+fi
+
 # 提取项目信息
 entity_path=${1}
 entity=${entity_path##*/}
@@ -27,22 +32,20 @@ do
 done < ${entity_scripts_path}/anima.txt
 
 if [ -f ispace.h ]; then
-    sed -i /s/demo/$ispace/g
-    sed -i /s/DEMO/$ISPACE/g
+    sed -i s/demo/$ispace/g ispace.h
+    sed -i s/DEMO/$ISPACE/g ispace.h
 fi
-
 if [ -f imodel.h ]; then
-    sed -i /s/demo/$imodel/g
-    sed -i /s/DEMO/$IMODEL/g
+    sed -i s/demo/$imodel/g imodel.h
+    sed -i s/DEMO/$IMODEL/g imodel.h
 fi
-
 if [ -f entity.h ]; then
-    sed -i /s/demo/$entity/g
-    sed -i /s/DEMO/$ENTITY/g
+    sed -i s/demo/$entity/g entity.h
+    sed -i s/DEMO/$ENTITY/g entity.h
 fi
 
 # 执行skindk一级的扩散
-pushd ../../../../
+pushd ../../../../ > /dev/null
 source annexe_skrink.sh
 source annexe_spread.sh
-popd
+popd > /dev/null

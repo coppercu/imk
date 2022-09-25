@@ -1,3 +1,8 @@
+if [ -z ${1} ]; then
+    read -p "没有项目路径参数, 请输入任意建退出" none
+    exit
+fi
+
 # 提取项目信息
 entity_path=${1}
 entity=${entity_path##*/}
@@ -16,7 +21,7 @@ if [ -f ispace.txt ]; then
     rm ispace.txt
 fi
 if [ -f imodel.txt ]; then
-    rm imodle.txt
+    rm imodel.txt
 fi
 if [ -f entity.txt ]; then
     rm entity.txt

@@ -1,6 +1,8 @@
 outlet.sh
 revamp.sh
+imodel.h
 regain_origin.sh
+ispace.h
 update.sh
 ibuild_origin.sh
 Iconfig
