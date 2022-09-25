@@ -23,6 +23,8 @@ echo $entity > entity.txt
 
 entity_scripts_path=../../../../../../../imk/src/scripts/entity
 
+# 更新ignore文件
+find ${entity_scripts_path}/anima/ -type f | cut -d / -f 13 | sed -e 's/^/\//g' > .gitignore
 # 更新anima.txt列表文件
 find ${entity_scripts_path}/anima/ -type f | cut -d / -f 13 > ${entity_scripts_path}/anima.txt
 # 更加anima.txt文件拷贝到entity的工作目录
