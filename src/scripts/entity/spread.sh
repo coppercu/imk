@@ -1,13 +1,20 @@
+echo imx_path $imx_path
+echo imk_path $imk_path
+echo rel_path $rel_path
 
 # 提取项目信息
-entity_path=${1}
-entity=${entity_path##*/}
-entity_path=${entity_path%/*}
-imodel=${entity_path##*/}
-entity_path=${entity_path%/*}
-ispace=${entity_path##*/}
+tmp_path=$rel_path
+entity=${tmp_path##*/}
+tmp_path=${tmp_path%/*}
+imodel=${tmp_path##*/}
+tmp_path=${tmp_path%/*}
+ispace=${tmp_path##*/}
+tmp_path=${tmp_path%/entity/*}
 
-echo ispace ${ispace} imodel ${imodel} entity ${entity}
+skindk=${tmp_path##*/}
+
+echo ispace $ispace imodel $imodel entity $entity
+echo skindk $skindk
 
 ISPACE=`echo $ispace | tr '[a-z]' '[A-Z]'`
 IMODEL=`echo $imodel | tr '[a-z]' '[A-Z]'`
@@ -17,17 +24,17 @@ echo $ispace > ispace.txt
 echo $imodel > imodel.txt
 echo $entity > entity.txt
 
-entity_scripts_path=../../../../../../../imk/src/scripts/entity
+entity_scripts_path=$imk_path/src/scripts/entity
 
 # 更新ignore文件
-find ${entity_scripts_path}/anima/ -type f | cut -d / -f 13 | sed -e 's/^/\//g' > .gitignore
+find $entity_scripts_path/anima/ -type f | cut -d / -f 10 | sed -e 's/^/\//g' > .gitignore
 # 更新anima.txt列表文件
-find ${entity_scripts_path}/anima/ -type f | cut -d / -f 13 > ${entity_scripts_path}/anima.txt
+find $entity_scripts_path/anima/ -type f | cut -d / -f 10 > $entity_scripts_path/anima.txt
 # 更加anima.txt文件拷贝到entity的工作目录
 while read file
 do
-    cp ${entity_scripts_path}/anima/$file ./
-done < ${entity_scripts_path}/anima.txt
+    cp $entity_scripts_path/anima/$file ./
+done < $entity_scripts_path/anima.txt
 
 if [ -f ispace.h ]; then
     sed -i s/demo/$ispace/g ispace.h
@@ -44,6 +51,7 @@ fi
 
 # 执行skindk一级的扩散
 pushd ../../../../ > /dev/null
-source annexe_skrink.sh
-source annexe_spread.sh
+if [ -f annexe_spread.sh ]; then
+    source annexe_spread.sh
+fi
 popd > /dev/null

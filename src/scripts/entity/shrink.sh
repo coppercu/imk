@@ -1,21 +1,20 @@
-if [ -z ${1} ]; then
-    read -p "没有项目路径参数, 请输入任意建退出" none
-    exit
-fi
+echo imx_path $imx_path
+echo imk_path $imk_path
+echo rel_path $rel_path
 
 # 提取项目信息
-entity_path=${1}
-entity=${entity_path##*/}
-entity_path=${entity_path%/*}
-imodel=${entity_path##*/}
-entity_path=${entity_path%/*}
-ispace=${entity_path##*/}
+tmp_path=$rel_path
+entity=${tmp_path##*/}
+tmp_path=${tmp_path%/*}
+imodel=${tmp_path##*/}
+tmp_path=${tmp_path%/*}
+ispace=${tmp_path##*/}
+tmp_path=${tmp_path%/entity/*}
 
-echo ispace ${ispace} imodel ${imodel} entity ${entity}
+skindk=${tmp_path##*/}
 
-ISPACE=`echo $ispace | tr '[a-z]' '[A-Z]'`
-IMODEL=`echo $imodel | tr '[a-z]' '[A-Z]'`
-ENTITY=`echo $entity | tr '[a-z]' '[A-Z]'`
+echo ispace $ispace imodel $imodel entity $entity
+echo skindk $skindk
 
 if [ -f ispace.txt ]; then
     rm ispace.txt
@@ -27,14 +26,23 @@ if [ -f entity.txt ]; then
     rm entity.txt
 fi
 
-entity_scripts_path=../../../../../../../imk/src/scripts/entity
+entity_scripts_path=$imk_path/src/scripts/entity
 
+# 更新ignore文件
+find $entity_scripts_path/anima/ -type f | cut -d / -f 10 | sed -e 's/^/\//g' > .gitignore
 # 更新anima.txt列表文件
-find ${entity_scripts_path}/anima/ -type f | cut -d / -f 13 > ${entity_scripts_path}/anima.txt
+find $entity_scripts_path/anima/ -type f | cut -d / -f 10 > $entity_scripts_path/anima.txt
 # 更加anima.txt文件拷贝到entity的工作目录
 while read file
 do
     if [ -f $file ]; then
         rm $file
     fi
-done < ${entity_scripts_path}/anima.txt
+done < $entity_scripts_path/anima.txt
+
+# 执行skindk一级的扩散
+pushd ../../../../ > /dev/null
+if [ -f annexe_shrink.sh ]; then
+    source annexe_shrink.sh
+fi
+popd > /dev/null
