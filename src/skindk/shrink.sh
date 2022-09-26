@@ -10,16 +10,16 @@ ifield=`cat $imx_path/ifield.txt`
 tmp_skindk=${PWD##*/}
 iscene=${tmp_skindk%%-*}
 tmp_skindk=${tmp_skindk#*-}
-#echo ${tmp_skindk}
+# echo ${tmp_skindk}
 igrade=${tmp_skindk%%-*}
 tmp_skindk=${tmp_skindk#*-}
-#echo ${tmp_skindk}
+# echo ${tmp_skindk}
 iplate=${tmp_skindk%%-*}
 tmp_skindk=${tmp_skindk#*-}
-#echo ${tmp_skindk}
+# echo ${tmp_skindk}
 iassem=${tmp_skindk%%-*}
 tmp_skindk=${tmp_skindk#*-}
-#echo ${tmp_skindk}
+# echo ${tmp_skindk}
 
 echo skindk: ${ifield}-${iscene}-${igrade}-${iplate}-${iassem}
 

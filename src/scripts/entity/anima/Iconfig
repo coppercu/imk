@@ -1,11 +1,4 @@
-mmenu "公共配置"
-     rsource ""
-endmenu
-
-enu "imk"
-     rsource "../../../../../../../imk/Iconfig"
-endmenu
-
-menu "ims"
-     rsource "../../../../../../../Iconfig"
-endmenu
+# -*- coding: utf-8 -*-
+#
+#
+#
