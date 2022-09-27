@@ -2,10 +2,10 @@ echo imx_path $imx_path
 echo imk_path $imk_path
 echo rel_path $rel_path
 
-if [ ! -f $imx_path/ifield.txt ]; then
+if [ ! -f $imx_path/imx.txt ]; then
     read -p "没有配置imx ifield文件"
 fi
-ifield=`cat $imx_path/ifield.txt`
+ifield=`cat $imx_path/imx.txt`
 
 tmp_skindk=${PWD##*/}
 iscene=${tmp_skindk%%-*}
@@ -21,7 +21,7 @@ iassem=${tmp_skindk%%-*}
 tmp_skindk=${tmp_skindk#*-}
 # echo ${tmp_skindk}
 
-echo skindk: ${ifield}-${iscene}-${igrade}-${iplate}-${iassem}
+echo skindk: $ifield-$iscene-$igrade-$iplate-$iassem
 
 if [ -f ifield.txt ]; then
     rm ifield.txt
