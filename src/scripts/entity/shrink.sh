@@ -2,6 +2,11 @@ echo imx_path $imx_path
 echo imk_path $imk_path
 echo rel_path $rel_path
 
+if [ ! -f $imx_path/imx.txt ]; then
+    read -p "没有配置imx ifield文件"
+fi
+ifield=`cat $imx_path/imx.txt`
+
 # 提取项目信息
 tmp_path=$rel_path
 entity=${tmp_path##*/}
@@ -11,10 +16,10 @@ tmp_path=${tmp_path%/*}
 imodel=${tmp_path##*/}
 
 tmp_path=${tmp_path%/entity/*}
-skindk=${tmp_path##*/}
+iplate=${tmp_path##*/}
 
 echo imodel $imodel iassem $iassem entity $entity
-echo skindk $skindk
+echo skindk: $ifield-$iplate
 
 if [ -f imodel.txt ]; then
     rm imodel.txt
