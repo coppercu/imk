@@ -6,7 +6,7 @@
 menu "公共配置"
 endmenu
 
-rsource "Iconfig"
+# rsource "Iconfig"
 
 menu "ims"
     rsource "../../../../../../../Iconfig"

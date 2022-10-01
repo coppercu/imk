@@ -6,21 +6,21 @@ echo rel_path $rel_path
 tmp_path=$rel_path
 entity=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
-imodel=${tmp_path##*/}
+iassem=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
-ispace=${tmp_path##*/}
-tmp_path=${tmp_path%/entity/*}
+imodel=${tmp_path##*/}
 
+tmp_path=${tmp_path%/entity/*}
 skindk=${tmp_path##*/}
 
-echo ispace $ispace imodel $imodel entity $entity
+echo imodel $imodel iassem $iassem entity $entity
 echo skindk $skindk
 
-if [ -f ispace.txt ]; then
-    rm ispace.txt
-fi
 if [ -f imodel.txt ]; then
     rm imodel.txt
+fi
+if [ -f iassem.txt ]; then
+    rm iassem.txt
 fi
 if [ -f entity.txt ]; then
     rm entity.txt

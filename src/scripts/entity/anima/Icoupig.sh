@@ -28,6 +28,6 @@ rel_path=${pwd_path##${imx_path}/}
 # 产生本实体独有的问题文件
 
 # 配置
-menuconfig
+menuconfig Icoupig
 
 # 保存配置

@@ -6,22 +6,22 @@ echo rel_path $rel_path
 tmp_path=$rel_path
 entity=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
-imodel=${tmp_path##*/}
+iassem=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
-ispace=${tmp_path##*/}
-tmp_path=${tmp_path%/entity/*}
+imodel=${tmp_path##*/}
 
+tmp_path=${tmp_path%/entity/*}
 skindk=${tmp_path##*/}
 
-echo ispace $ispace imodel $imodel entity $entity
+echo imodel $imodel iassem $iassem entity $entity
 echo skindk $skindk
 
-ISPACE=`echo $ispace | tr '[a-z]' '[A-Z]'`
 IMODEL=`echo $imodel | tr '[a-z]' '[A-Z]'`
+IASSEM=`echo $iassem | tr '[a-z]' '[A-Z]'`
 ENTITY=`echo $entity | tr '[a-z]' '[A-Z]'`
 
-echo $ispace > ispace.txt
 echo $imodel > imodel.txt
+echo $iassem > iassem.txt
 echo $entity > entity.txt
 
 entity_scripts_path=$imk_path/src/scripts/entity
@@ -36,13 +36,13 @@ do
     cp $entity_scripts_path/anima/$file ./
 done < $entity_scripts_path/anima.txt
 
-if [ -f ispace.h ]; then
-    sed -i s/demo/$ispace/g ispace.h
-    sed -i s/DEMO/$ISPACE/g ispace.h
-fi
 if [ -f imodel.h ]; then
     sed -i s/demo/$imodel/g imodel.h
     sed -i s/DEMO/$IMODEL/g imodel.h
+fi
+if [ -f iassem.h ]; then
+    sed -i s/demo/$iassem/g iassem.h
+    sed -i s/DEMO/$IASSEM/g iassem.h
 fi
 if [ -f entity.h ]; then
     sed -i s/demo/$entity/g entity.h

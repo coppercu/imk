@@ -7,21 +7,12 @@ if [ ! -f $imx_path/imx.txt ]; then
 fi
 ifield=`cat $imx_path/imx.txt`
 
-tmp_skindk=${PWD##*/}
-iscene=${tmp_skindk%%-*}
-tmp_skindk=${tmp_skindk#*-}
-# echo ${tmp_skindk}
-igrade=${tmp_skindk%%-*}
-tmp_skindk=${tmp_skindk#*-}
-# echo ${tmp_skindk}
-iplate=${tmp_skindk%%-*}
-tmp_skindk=${tmp_skindk#*-}
-# echo ${tmp_skindk}
-iassem=${tmp_skindk%%-*}
-tmp_skindk=${tmp_skindk#*-}
-# echo ${tmp_skindk}
+iplate=${PWD##*/}
 
-echo skindk: $ifield-$iscene-$igrade-$iplate-$iassem
+echo skindk: $ifield-$iplate
+
+echo "$ifield">ifield.txt
+echo "$iplate">iplate.txt
 
 if [ -f ifield.txt ]; then
     rm ifield.txt
