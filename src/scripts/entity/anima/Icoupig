@@ -9,9 +9,9 @@ endmenu
 # rsource "Iconfig"
 
 menu "ims"
-    rsource "../../../../../../../Iconfig"
+    rsource "../../../../../../../../Iconfig"
 endmenu
 
 menu "imk"
-    rsource "../../../../../../../imk/Iconfig"
+    rsource "../../../../../../../../imk/Iconfig"
 endmenu

@@ -11,6 +11,8 @@ ifield=`cat $imx_path/imx.txt`
 tmp_path=$rel_path
 entity=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
+igrade=${tmp_path##*/}
+tmp_path=${tmp_path%/*}
 iassem=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
 imodel=${tmp_path##*/}
@@ -18,7 +20,7 @@ imodel=${tmp_path##*/}
 tmp_path=${tmp_path%/entity/*}
 iplate=${tmp_path##*/}
 
-echo imodel $imodel iassem $iassem entity $entity
+echo imodel $imodel iassem $iassem igrade $igrade entity $entity
 echo skindk: $ifield-$iplate
 
 if [ -f imodel.txt ]; then
@@ -26,6 +28,9 @@ if [ -f imodel.txt ]; then
 fi
 if [ -f iassem.txt ]; then
     rm iassem.txt
+fi
+if [ -f igrade.txt ]; then
+    rm igrade.txt
 fi
 if [ -f entity.txt ]; then
     rm entity.txt
@@ -46,7 +51,7 @@ do
 done < $entity_scripts_path/anima.txt
 
 # 执行skindk一级的扩散
-pushd ../../../../ > /dev/null
+pushd ../../../../../ > /dev/null
 if [ -f annexe_shrink.sh ]; then
     source annexe_shrink.sh
 fi

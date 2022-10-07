@@ -4,6 +4,6 @@
 #define ICOUPIG_SAMPLE
 #define ICONFIG_SAMPLE
 
-#define ICONFIG_IASSEM      "sample"
+#define ICONFIG_IGRADE      "sample"
 
 #endif // __ISPACE_H__

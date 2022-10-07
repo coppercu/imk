@@ -3,7 +3,7 @@
 #
 #
 
-pushd ../../../../../../../ > /dev/null
+pushd ../../../../../../../../ > /dev/null
 
 imx_path=`pwd`
 

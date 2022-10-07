@@ -11,6 +11,8 @@ ifield=`cat $imx_path/imx.txt`
 tmp_path=$rel_path
 entity=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
+igrade=${tmp_path##*/}
+tmp_path=${tmp_path%/*}
 iassem=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
 imodel=${tmp_path##*/}
@@ -18,15 +20,17 @@ imodel=${tmp_path##*/}
 tmp_path=${tmp_path%/entity/*}
 iplate=${tmp_path##*/}
 
-echo imodel $imodel iassem $iassem entity $entity
+echo imodel $imodel iassem $iassem igrade $igrade entity $entity
 echo skindk: $ifield-$iplate
 
 IMODEL=`echo $imodel | tr '[a-z]' '[A-Z]'`
 IASSEM=`echo $iassem | tr '[a-z]' '[A-Z]'`
+IGRADE=`echo $igrade | tr '[a-z]' '[A-Z]'`
 ENTITY=`echo $entity | tr '[a-z]' '[A-Z]'`
 
 echo $imodel > imodel.txt
 echo $iassem > iassem.txt
+echo $igrade > igrade.txt
 echo $entity > entity.txt
 
 entity_scripts_path=$imk_path/src/scripts/entity
@@ -42,20 +46,24 @@ do
 done < $entity_scripts_path/anima.txt
 
 if [ -f imodel.h ]; then
-    sed -i s/demo/$imodel/g imodel.h
-    sed -i s/DEMO/$IMODEL/g imodel.h
+    sed -i s/sample/$imodel/g imodel.h
+    sed -i s/SAMPLE/$IMODEL/g imodel.h
 fi
 if [ -f iassem.h ]; then
-    sed -i s/demo/$iassem/g iassem.h
-    sed -i s/DEMO/$IASSEM/g iassem.h
+    sed -i s/sample/$iassem/g iassem.h
+    sed -i s/SAMPLE/$IASSEM/g iassem.h
+fi
+if [ -f igrade.h ]; then
+    sed -i s/sample/$igrade/g igrade.h
+    sed -i s/SAMPLE/$IGRADE/g igrade.h
 fi
 if [ -f entity.h ]; then
-    sed -i s/demo/$entity/g entity.h
-    sed -i s/DEMO/$ENTITY/g entity.h
+    sed -i s/sample/$entity/g entity.h
+    sed -i s/SAMPLE/$ENTITY/g entity.h
 fi
 
 # 执行skindk一级的扩散
-pushd ../../../../ > /dev/null
+pushd ../../../../../ > /dev/null
 if [ -f annexe_spread.sh ]; then
     source annexe_spread.sh
 fi
