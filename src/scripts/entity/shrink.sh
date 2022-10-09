@@ -3,15 +3,14 @@ echo imk_path $imk_path
 echo rel_path $rel_path
 
 if [ ! -f $imx_path/imx.txt ]; then
-    read -p "没有配置imx ifield文件"
+    read -p "没有配置imx ifield文件" key
+    exit
 fi
 ifield=`cat $imx_path/imx.txt`
 
 # 提取项目信息
 tmp_path=$rel_path
 entity=${tmp_path##*/}
-tmp_path=${tmp_path%/*}
-igrade=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
 iassem=${tmp_path##*/}
 tmp_path=${tmp_path%/*}
@@ -20,7 +19,7 @@ imodel=${tmp_path##*/}
 tmp_path=${tmp_path%/entity/*}
 iplate=${tmp_path##*/}
 
-echo imodel $imodel iassem $iassem igrade $igrade entity $entity
+echo imodel $imodel iassem $iassem entity $entity
 echo skindk: $ifield-$iplate
 
 if [ -f imodel.txt ]; then
@@ -28,9 +27,6 @@ if [ -f imodel.txt ]; then
 fi
 if [ -f iassem.txt ]; then
     rm iassem.txt
-fi
-if [ -f igrade.txt ]; then
-    rm igrade.txt
 fi
 if [ -f entity.txt ]; then
     rm entity.txt
@@ -51,7 +47,7 @@ do
 done < $entity_scripts_path/anima.txt
 
 # 执行skindk一级的扩散
-pushd ../../../../../ > /dev/null
+pushd ../../../../ > /dev/null
 if [ -f annexe_shrink.sh ]; then
     source annexe_shrink.sh
 fi
