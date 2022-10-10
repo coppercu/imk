@@ -24,15 +24,55 @@ imodel=${tmp_path##*/}
 tmp_path=${tmp_path%/entity/*}
 iplate=${tmp_path##*/}
 
-echo imodel $imodel iassem $iassem entity $entity
-echo skindk: $ifield-$iplate
+master=
+if [ -f ../master.txt ]; then
+    # assist节点会在master.txt中保存对应的master值，其他所有的信息，都从指向的master获得
+    master=`cat ../master.txt`
+else
+    # master节点，指向自己
+    master=$iplate
+    if [ -f ../../imodel.json ]; then
+        assist=`cat ../../imodel.json | jq .assist`
+        if [ -n $assist ]; then
+            if [ -d $iplate > ../../../../../$assist ]; then
+                mkdir -p ../../../../../$assist/entity/$imodel/$iassem/$entity
+                echo $master > ../../../../../$assist/entity/$imodel/$iassem/master.txt
+                cp .gitignore > ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                cp .bundle.json > ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                cp .annexe_spread.sh > ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                cp .annexe_shrink.sh > ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                # 即使master.txt文件存在也更新，这样vc工具可以判断配置是否有异常
+            fi
+        fi
+    fi
+fi
+if [ -n $master ]; then
+    read -p "没有判断出master的指向" key
+    exit
+fi
 
+if [ -f $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json ]; then
+   iclass=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iclass`
+   iorder=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iorder`
+fi
+if [ -z $iclass or -z $iorder ]; then
+    read -p "iclass $iclas iorder $iorder 不达标" key
+    exit
+fi
+
+echo ifield $ifield iplate $iplate imodel $imodel iassem $iassem iclass $iclass iorder $iorder entity $entity
+
+IPLATE=`echo $iplate | tr '[a-z]' '[A-Z]'`
 IMODEL=`echo $imodel | tr '[a-z]' '[A-Z]'`
 IASSEM=`echo $iassem | tr '[a-z]' '[A-Z]'`
+ICLASS=`echo $iclass | tr '[a-z]' '[A-Z]'`
+IORDER=`echo $iorder | tr '[a-z]' '[A-Z]'`
 ENTITY=`echo $entity | tr '[a-z]' '[A-Z]'`
 
 echo $imodel > imodel.txt
 echo $iassem > iassem.txt
+echo $iclass > iclass.txt
+echo $iorder > iorder.txt
 echo $entity > entity.txt
 
 entity_scripts_path=$imk_path/src/scripts/entity
@@ -58,17 +98,6 @@ fi
 if [ -f entity.h ]; then
     sed -i s/sample/$entity/g entity.h
     sed -i s/SAMPLE/$ENTITY/g entity.h
-fi
-
-master=`cat ../../imodel.json | jq .master`
-if [ -z $master ]; then
-    # 没有master,不是从节点
-    assist=`cat ../../imodel.json | jq .assist`
-    if [ ! -z $assist ]; then
-       # 没有从节点
-    fi
-else
-    # 有master指向，
 fi
 
 # 执行skindk一级的扩散
