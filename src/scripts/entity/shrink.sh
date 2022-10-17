@@ -47,8 +47,8 @@ do
 done < $entity_scripts_path/anima.txt
 
 # 执行skindk一级的扩散
-pushd ../../../../ > /dev/null
-if [ -f annexe_shrink.sh ]; then
-    source annexe_shrink.sh
-fi
-popd > /dev/null
+# pushd ../../../../ > /dev/null
+# if [ -f annexe_shrink.sh ]; then
+#     source annexe_shrink.sh
+# fi
+# popd > /dev/null

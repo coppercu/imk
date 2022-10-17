@@ -23,15 +23,23 @@ fi
 
 popd > /dev/null
 
+
 pwd_path=`pwd`
 rel_path=${pwd_path##${imx_path}/}
 
-# 产生本实体独有的问题文件
-
 # 项目配置
-menuconfig Icoupig
-# 将.config更到icoupig.h
-mv .config icoupig.h
+if [ -f Icoupig ]; then
+    menuconfig Icoupig
+    # 将.config更到icoupig.h
+    if [ -f .config ]; then
+        mv .config icoupig.h
+    else
+        read -p "未生成icoupig.h文件" key
+        exit
+    fi
+else
+    read -p "未找到Icoupig配置文件" key
+fi
 
 # 主节点配置
 if [ -f Iconfig ]; then
@@ -39,7 +47,7 @@ if [ -f Iconfig ]; then
     if [ -f .config ]; then
         mv .config iconfig.h
     else
-        read -p "未产生.config" key
+        read -p "未产生iconfig.h文件" key
         exit
     fi
 else
@@ -47,8 +55,6 @@ else
     cp icoupig.h iconfig.h
     sed -i "s/icoupig/iconfig" iconfig.h
     sed -i "s/ICOUPIG/ICONFIG" iconfig.h
-    read -p "未产生.config" key
-    exit
 fi
 
 # 从节点配置
@@ -61,12 +67,15 @@ if [ -f Iconfig_assist ]; then
                 cp .config ../../../../../$assist/entity/$imodel/$iassem/$entity/iconfig.h
             fi
         fi
+    else
+        read -p "未生成iconfig_assist.h文件" key
+        exit
     fi
 fi
 
 if [ -f $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json ]; then
-   iclass=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iclass`
-   iorder=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iorder`
+    iclass=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iclass`
+    iorder=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iorder`
 fi
 if [ -z $iclass or -z $iorder ]; then
     read -p "iclass $iclas iorder $iorder 不达标" key

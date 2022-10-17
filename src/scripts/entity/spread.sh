@@ -62,6 +62,7 @@ fi
 
 echo ifield $ifield iplate $iplate imodel $imodel iassem $iassem iclass $iclass iorder $iorder entity $entity
 
+IFIELD=`echo $ifield | tr '[a-z]' '[A-Z]'`
 IPLATE=`echo $iplate | tr '[a-z]' '[A-Z]'`
 IMODEL=`echo $imodel | tr '[a-z]' '[A-Z]'`
 IASSEM=`echo $iassem | tr '[a-z]' '[A-Z]'`
@@ -69,6 +70,8 @@ ICLASS=`echo $iclass | tr '[a-z]' '[A-Z]'`
 IORDER=`echo $iorder | tr '[a-z]' '[A-Z]'`
 ENTITY=`echo $entity | tr '[a-z]' '[A-Z]'`
 
+echo $ifield > ifield.txt
+echo $iplate > iplate.txt
 echo $imodel > imodel.txt
 echo $iassem > iassem.txt
 echo $iclass > iclass.txt
@@ -87,22 +90,19 @@ do
     cp $entity_scripts_path/anima/$file ./
 done < $entity_scripts_path/anima.txt
 
-if [ -f imodel.h ]; then
-    sed -i s/sample/$imodel/g imodel.h
-    sed -i s/SAMPLE/$IMODEL/g imodel.h
-fi
-if [ -f iassem.h ]; then
-    sed -i s/sample/$iassem/g iassem.h
-    sed -i s/SAMPLE/$IASSEM/g iassem.h
-fi
-if [ -f entity.h ]; then
-    sed -i s/sample/$entity/g entity.h
-    sed -i s/SAMPLE/$ENTITY/g entity.h
-fi
+# echo "#ifndef __ENTITY_H__
+# #define __ENTITY_H__
+
+# #define ICOUPIG_
+# #define ICONFIG_
+
+# #define ICONFIG_ENTITY      "sample"
+
+# #endif // __ENTITY_H__" > entity.h
 
 # 执行skindk一级的扩散
-pushd ../../../../ > /dev/null
-if [ -f annexe_spread.sh ]; then
-    source annexe_spread.sh
-fi
-popd > /dev/null
+# pushd ../../../../ > /dev/null
+# if [ -f annexe_spread.sh ]; then
+#     source annexe_spread.sh
+# fi
+# popd > /dev/null
