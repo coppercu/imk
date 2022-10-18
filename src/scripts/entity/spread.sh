@@ -24,29 +24,43 @@ imodel=${tmp_path##*/}
 tmp_path=${tmp_path%/entity/*}
 iplate=${tmp_path##*/}
 
-master=
+couple=""
+master=""
+assist=""
 if [ -f ../master.txt ]; then
     # assist节点会在master.txt中保存对应的master值，其他所有的信息，都从指向的master获得
     master=`cat ../master.txt`
+    assist=$iplate
+    couple="1"
 else
     # master节点，指向自己
     master=$iplate
     if [ -f ../../imodel.json ]; then
-        assist=`cat ../../imodel.json | jq .assist`
+        assist=`cat ../../imodel.json | jq .assist | sed -e "s/\"//g"`
         if [ -n $assist ]; then
-            if [ -d $iplate > ../../../../../$assist ]; then
+            couple="1"
+            if [ -d ../../../../../$assist ]; then
+                echo assist $assist
                 mkdir -p ../../../../../$assist/entity/$imodel/$iassem/$entity
                 echo $master > ../../../../../$assist/entity/$imodel/$iassem/master.txt
-                cp .gitignore > ../../../../../$assist/entity/$imodel/$iassem/$entity/
-                cp .bundle.json > ../../../../../$assist/entity/$imodel/$iassem/$entity/
-                cp .annexe_spread.sh > ../../../../../$assist/entity/$imodel/$iassem/$entity/
-                cp .annexe_shrink.sh > ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                cp .gitignore ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                cp bundle.json ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                cp annexe_spread.sh ../../../../../$assist/entity/$imodel/$iassem/$entity/
+                cp annexe_shrink.sh ../../../../../$assist/entity/$imodel/$iassem/$entity/
                 # 即使master.txt文件存在也更新，这样vc工具可以判断配置是否有异常
+            else
+                read -p "assist $assist 没有创建" key
+                exit
             fi
+        else
+            assist=$iplate
         fi
+    else
+        read -p "没有imodel文件" key
+        exit
     fi
 fi
-if [ -n $master ]; then
+if [ -z $master -o -z $assist ]; then
     read -p "没有判断出master的指向" key
     exit
 fi
@@ -55,7 +69,7 @@ if [ -f $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json 
    iclass=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iclass`
    iorder=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iorder`
 fi
-if [ -z $iclass or -z $iorder ]; then
+if [ -z $iclass -o -z $iorder ]; then
     read -p "iclass $iclas iorder $iorder 不达标" key
     exit
 fi
@@ -90,19 +104,109 @@ do
     cp $entity_scripts_path/anima/$file ./
 done < $entity_scripts_path/anima.txt
 
-# echo "#ifndef __ENTITY_H__
-# #define __ENTITY_H__
+echo "ifield.txt" >> .gitignore
+echo "iplate.txt" >> .gitignore
+echo "imodel.txt" >> .gitignore
+echo "iassem.txt" >> .gitignore
+echo "iclass.txt" >> .gitignore
+echo "iorder.txt" >> .gitignore
+echo "entity.txt" >> .gitignore
 
-# #define ICOUPIG_
-# #define ICONFIG_
+echo "
+select $IFIELD
+select $IPLATE
+select $IMODEL
+select $IASSEM
+select $ICLASS
+select $IORDER
+select $ENTITY
+" > Icoupig
 
-# #define ICONFIG_ENTITY      "sample"
+if [ -n $couple ]; then
+    echo "
+config COUPLE
+    bool \"COUPLE\"
+" >> Icoupig
+else
+    echo "
+config SINGLE
+    bool \"SINGLE\"
+" >> Icoupig
+fi
 
-# #endif // __ENTITY_H__" > entity.h
+echo "
+config MASTER
+    bool \"MASTER\"
+config ASSIST
+    bool \"ASSIST\"
+" >> Icoupig
 
-# 执行skindk一级的扩散
-# pushd ../../../../ > /dev/null
-# if [ -f annexe_spread.sh ]; then
-#     source annexe_spread.sh
-# fi
-# popd > /dev/null
+echo "rsource Sconfig" >> Icoupig
+
+if [ -n $couple ]; then
+
+    # master
+    echo "
+select $IFIELD
+select $IPLATE
+select $IMODEL
+select $IASSEM
+select $ICLASS
+select $IORDER
+select $ENTITY
+" > Iconfig_master
+
+    if [ -n $couple ]; then
+        echo "
+config COUPLE
+    bool \"COUPLE\"
+" >> Iconfig_master
+    else
+        echo "
+config SINGLE
+    bool \"SINGLE\"
+" >> Iconfig_master
+    fi
+
+    echo "
+config MASTER
+    bool \"MASTER\"
+" >> Iconfig_master
+
+    echo "rsource Sconfig" >> Iconfig_assist
+
+    # assist
+    echo "
+select $IFIELD
+select $IPLATE
+select $IMODEL
+select $IASSEM
+select $ICLASS
+select $IORDER
+select $ENTITY
+" > Iconfig_assist
+
+    if [ -n $couple ]; then
+        echo "
+config COUPLE
+    bool \"COUPLE\"
+" >> Iconfig_assist
+    else
+        echo "
+config SINGLE
+    bool \"SINGLE\"
+" >> Iconfig_assist
+    fi
+
+    echo "
+config ASSIST
+    bool \"ASSIST\"
+" >> Iconfig_assist
+
+    echo "rsource Sconfig" >> Iconfig_assist
+
+fi
+
+echo "Icoupig" >> .gitignore
+echo "Iconfig_master" >> .gitignore
+echo "Iconfig_assist" >> .gitignore

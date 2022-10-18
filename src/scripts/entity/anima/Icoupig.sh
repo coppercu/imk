@@ -42,8 +42,8 @@ else
 fi
 
 # 主节点配置
-if [ -f Iconfig ]; then
-    menuconfig Iconfig
+if [ -f Iconfig_master ]; then
+    menuconfig Iconfig_master
     if [ -f .config ]; then
         mv .config iconfig.h
     else

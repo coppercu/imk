@@ -22,11 +22,23 @@ iplate=${tmp_path##*/}
 echo imodel $imodel iassem $iassem entity $entity
 echo skindk: $ifield-$iplate
 
+if [ -f ifield.txt ]; then
+    rm ifield.txt
+fi
+if [ -f iplate.txt ]; then
+    rm iplate.txt
+fi
 if [ -f imodel.txt ]; then
     rm imodel.txt
 fi
 if [ -f iassem.txt ]; then
     rm iassem.txt
+fi
+if [ -f iclass.txt ]; then
+    rm iclass.txt
+fi
+if [ -f iorder.txt ]; then
+    rm iorder.txt
 fi
 if [ -f entity.txt ]; then
     rm entity.txt
@@ -46,9 +58,12 @@ do
     fi
 done < $entity_scripts_path/anima.txt
 
-# 执行skindk一级的扩散
-# pushd ../../../../ > /dev/null
-# if [ -f annexe_shrink.sh ]; then
-#     source annexe_shrink.sh
-# fi
-# popd > /dev/null
+if [ -f Icoupig ]; then
+    rm Icoupig
+fi
+if [ -f Iconfig_master ]; then
+    rm Iconfig_master
+fi
+if [ -f Iconfig_assist ]; then
+    rm Iconfig_assist
+fi
