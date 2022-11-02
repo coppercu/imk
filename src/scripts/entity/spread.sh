@@ -66,8 +66,8 @@ if [ -z $master -o -z $assist ]; then
 fi
 
 if [ -f $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json ]; then
-   iclass=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iclass`
-   iorder=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iorder`
+   iclass=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iclass | sed -e "s/\"//g"`
+   iorder=`cat $imx_path/src/skindk/$master/entity/$imodel/$iassem/$entity/entity.json | jq .iorder | sed -e "s/\"//g"`
 fi
 if [ -z $iclass -o -z $iorder ]; then
     read -p "iclass $iclas iorder $iorder 不达标" key
@@ -84,14 +84,6 @@ ICLASS=`echo $iclass | tr '[a-z]' '[A-Z]'`
 IORDER=`echo $iorder | tr '[a-z]' '[A-Z]'`
 ENTITY=`echo $entity | tr '[a-z]' '[A-Z]'`
 
-echo $ifield > ifield.txt
-echo $iplate > iplate.txt
-echo $imodel > imodel.txt
-echo $iassem > iassem.txt
-echo $iclass > iclass.txt
-echo $iorder > iorder.txt
-echo $entity > entity.txt
-
 entity_scripts_path=$imk_path/src/scripts/entity
 
 # 更新ignore文件
@@ -104,108 +96,57 @@ do
     cp $entity_scripts_path/anima/$file ./
 done < $entity_scripts_path/anima.txt
 
-echo "ifield.txt" >> .gitignore
-echo "iplate.txt" >> .gitignore
-echo "imodel.txt" >> .gitignore
-echo "iassem.txt" >> .gitignore
-echo "iclass.txt" >> .gitignore
-echo "iorder.txt" >> .gitignore
-echo "entity.txt" >> .gitignore
+echo "
+{
+    \"ifield\" : \"$ifield\",
+    \"iplate\" : \"$iplate\",
+    \"imodel\" : \"$imodel\",
+    \"iassem\" : \"$iassem\",
+    \"iclass\" : \"$iclass\",
+    \"iorder\" : \"$iorder\",
+    \"entity\" : \"$entity\"
+}
+" > entity.jconfig
+
+echo "entity.jconfig" >> .gitignore
 
 echo "
-select $IFIELD
-select $IPLATE
-select $IMODEL
-select $IASSEM
-select $ICLASS
-select $IORDER
-select $ENTITY
-" > Icoupig
+IFIELD := $ifield
+IPLATE := $iplate
+IMODEL := $imodel
+IASSEM := $iassem
+ICLASS := $iclass
+IORDER := $iorder
+ENTITY := $entity
+" > entity.sconfig
 
-if [ -n $couple ]; then
-    echo "
-config COUPLE
-    bool \"COUPLE\"
-" >> Icoupig
-else
-    echo "
-config SINGLE
-    bool \"SINGLE\"
-" >> Icoupig
-fi
+echo "entity.sconfig" >> .gitignore
 
-echo "
-config MASTER
-    bool \"MASTER\"
-config ASSIST
-    bool \"ASSIST\"
-" >> Icoupig
+echo "" > Icoupig
 
-echo "rsource Sconfig" >> Icoupig
+# if [ -n $couple ]; then
+#     echo "
+# config COUPLE
+#     bool \"COUPLE\"
+# " >> Icoupig
+# else
+#     echo "
+# config SINGLE
+#     bool \"SINGLE\"
+# " >> Icoupig
+# fi
 
-if [ -n $couple ]; then
+# echo "
+# config MASTER
+#     bool \"MASTER\"
+# config ASSIST
+#     bool \"ASSIST\"
+# " >> Icoupig
 
-    # master
-    echo "
-select $IFIELD
-select $IPLATE
-select $IMODEL
-select $IASSEM
-select $ICLASS
-select $IORDER
-select $ENTITY
-" > Iconfig_master
+echo "rsource \"Sconfig.root\"" >> Icoupig
 
-    if [ -n $couple ]; then
-        echo "
-config COUPLE
-    bool \"COUPLE\"
-" >> Iconfig_master
-    else
-        echo "
-config SINGLE
-    bool \"SINGLE\"
-" >> Iconfig_master
-    fi
-
-    echo "
-config MASTER
-    bool \"MASTER\"
-" >> Iconfig_master
-
-    echo "rsource Sconfig" >> Iconfig_assist
-
-    # assist
-    echo "
-select $IFIELD
-select $IPLATE
-select $IMODEL
-select $IASSEM
-select $ICLASS
-select $IORDER
-select $ENTITY
-" > Iconfig_assist
-
-    if [ -n $couple ]; then
-        echo "
-config COUPLE
-    bool \"COUPLE\"
-" >> Iconfig_assist
-    else
-        echo "
-config SINGLE
-    bool \"SINGLE\"
-" >> Iconfig_assist
-    fi
-
-    echo "
-config ASSIST
-    bool \"ASSIST\"
-" >> Iconfig_assist
-
-    echo "rsource Sconfig" >> Iconfig_assist
-
-fi
+# if [ -n $couple ]; then
+# fi
 
 echo "Icoupig" >> .gitignore
 echo "Iconfig_master" >> .gitignore

@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+#
+#
+#
+
+rsource "entity.sconfig"
+rsource "Sconfig"
+rsource "../Sconfig"
+rsource "../../Sconfig"
+rsource "../../../Sconfig"
+rsource "../../../../Sconfig"
+
+menu "ims"
+    rsource "../../../../../../../Sconfig"
+endmenu
+
+menu "imk"
+    rsource "../../../../../../../imk/Sconfig"
+endmenu
