@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
 #
-# kconfig配置文件
+# imk的Sconfig
 #
+
+menuconfig IMK
+    bool
+    prompt "imk"
+    help
+        imk
+
+if IMK
 
 # menu "skinio"
 # 	rsource "src/skinio/Iconfig"
@@ -14,3 +22,5 @@
 # menu "treary"
 # 	rsource "src/treary/Iconfig"
 # endmenu
+
+endif

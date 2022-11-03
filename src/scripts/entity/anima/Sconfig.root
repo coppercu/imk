@@ -4,16 +4,51 @@
 #
 
 rsource "entity.sconfig"
+
+mainmenu "$(IFIELD)-$(IPLATE)-$(IMODEL)-$(IASSEM)-$(ICLASS)-$(IORDER)-$(ENTITY)"
+
+menu "root配置"
+
+config IFIELD
+    string "ifield"
+    default "$(IFIELD)"
+
+config IPLATE
+    string "iplate"
+    default "$(IPLATE)"
+
+config IASSEM
+    string "iassem"
+    default "$(IASSEM)"
+
+config ICLASS
+    string "iclass"
+    default "$(ICLASS)"
+
+config IORDER
+    string "iorder"
+    default "$(IORDER)"
+
+config ENTITY
+    string "entity"
+    default "$(ENTITY)"
+
+config SKINIO
+    string "skinio"
+    default "$(SKINIO)"
+
+endmenu
+
 rsource "Sconfig"
 rsource "../Sconfig"
 rsource "../../Sconfig"
 rsource "../../../Sconfig"
-rsource "../../../../Sconfig"
 
-menu "ims"
-    rsource "../../../../../../../Sconfig"
-endmenu
+rsource "../../../../../../branch/iclass/$(ICLASS)/Sconfig"
+rsource "../../../../../../branch/iorder/$(IORDER)/Sconfig"
 
-menu "imk"
-    rsource "../../../../../../../imk/Sconfig"
-endmenu
+rsource "../../../../../../skinio/$(SKINIO)/Sconfig"
+
+rsource "../../../../../../../Sconfig"
+
+rsource "../../../../../../../imk/Sconfig"

@@ -24,6 +24,15 @@ imodel=${tmp_path##*/}
 tmp_path=${tmp_path%/entity/*}
 iplate=${tmp_path##*/}
 
+skinio=
+if [ -f ../../../../skindk.json ]; then
+    skinio=`cat ../../../../skindk.json | jq .skinio | sed -e "s/\"//g"`
+fi
+if [ -z $skinio ]; then
+    read -p "没有判断出skinio的指向" key
+    exit
+fi
+
 couple=""
 master=""
 assist=""
@@ -83,6 +92,7 @@ IASSEM=`echo $iassem | tr '[a-z]' '[A-Z]'`
 ICLASS=`echo $iclass | tr '[a-z]' '[A-Z]'`
 IORDER=`echo $iorder | tr '[a-z]' '[A-Z]'`
 ENTITY=`echo $entity | tr '[a-z]' '[A-Z]'`
+SKINIO=`echo $skinio | tr '[a-z]' '[A-Z]'`
 
 entity_scripts_path=$imk_path/src/scripts/entity
 
@@ -105,6 +115,7 @@ echo "
     \"iclass\" : \"$iclass\",
     \"iorder\" : \"$iorder\",
     \"entity\" : \"$entity\"
+    \"skinio\" : \"$skinio\"
 }
 " > entity.jconfig
 
@@ -118,7 +129,23 @@ IASSEM := $iassem
 ICLASS := $iclass
 IORDER := $iorder
 ENTITY := $entity
+SKINIO := $skinio
 " > entity.sconfig
+
+echo "
+config ROOT
+    bool
+    default y
+    select IMK
+    select $IFIELD
+    select $IPLATE
+    select $IMODEL
+    select $IASSEM
+    select $ICLASS
+    select $IORDER
+    select $ENTITY
+    select $SKINIO
+" >> entity.sconfig
 
 echo "entity.sconfig" >> .gitignore
 
