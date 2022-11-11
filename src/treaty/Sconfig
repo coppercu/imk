@@ -1,2 +1,8 @@
-menu "treaty"
-endmenu
+menuconfig TREATY
+    bool "treaty"
+    default y
+    help
+        treaty layer
+
+if TREATY
+endif

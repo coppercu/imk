@@ -1,2 +1,8 @@
-menu "imw"
-endmenu
+menuconfig IMW
+    bool "imw"
+    default y
+    help
+        imw layer
+
+if IMW
+endif

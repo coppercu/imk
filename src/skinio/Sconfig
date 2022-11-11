@@ -1,0 +1,8 @@
+# menuconfig SKINIO
+#     bool "skinio"
+#     default y
+#     help
+#         skinio layer
+#
+# if SKINIO
+# endif

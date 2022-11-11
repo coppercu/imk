@@ -1,2 +1,8 @@
-menu "borrow"
-endmenu
+menuconfig BORROW
+    bool "borrow"
+    default y
+    help
+        borrow layer
+
+if BORROW
+endif

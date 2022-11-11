@@ -1,0 +1,5 @@
+menuconfig WCLOCK
+    bool "wclock"
+    default y
+    help
+        wclock连接

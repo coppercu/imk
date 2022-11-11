@@ -1,0 +1,5 @@
+menuconfig HINGER
+    bool "hinger"
+    default y
+    help
+        hinger连接
