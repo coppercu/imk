@@ -119,7 +119,7 @@ echo "
 }
 " > entity.jconfig
 
-echo "entity.jconfig" >> .gitignore
+echo "/entity.jconfig" >> .gitignore
 
 echo "
 IFIELD := $ifield
@@ -147,7 +147,7 @@ config ROOT
     select $SKINIO
 " >> entity.sconfig
 
-echo "entity.sconfig" >> .gitignore
+echo "/entity.sconfig" >> .gitignore
 
 echo "" > Icoupig
 
@@ -175,6 +175,6 @@ echo "rsource \"Sconfig.root\"" >> Icoupig
 # if [ -n $couple ]; then
 # fi
 
-echo "Icoupig" >> .gitignore
-echo "Iconfig_master" >> .gitignore
-echo "Iconfig_assist" >> .gitignore
+echo "/Icoupig" >> .gitignore
+echo "/Iconfig_master" >> .gitignore
+echo "/Iconfig_assist" >> .gitignore

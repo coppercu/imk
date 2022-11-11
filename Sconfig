@@ -11,16 +11,6 @@ menuconfig IMK
 
 if IMK
 
-# menu "skinio"
-# 	rsource "src/skinio/Iconfig"
-# endmenu
-#
-# menu "system"
-# 	rsource "src/system/Iconfig"
-# endmenu
-#
-# menu "treary"
-# 	rsource "src/treary/Iconfig"
-# endmenu
+rsource "src/Sconfig"
 
 endif

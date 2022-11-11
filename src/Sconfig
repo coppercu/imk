@@ -1,0 +1,6 @@
+rsource "imw/Sconfig"
+rsource "skinio/Sconfig"
+rsource "system/Sconfig"
+rsource "borrow/Sconfig"
+rsource "treaty/Sconfig"
+rsource "branch/Sconfig"

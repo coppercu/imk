@@ -1,6 +1,0 @@
-menu "system"
-
-rsource "affirm.kcb"
-rsource "dialog.kcb"
-
-endmenu

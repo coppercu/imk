@@ -19,30 +19,7 @@ imodel=${tmp_path##*/}
 tmp_path=${tmp_path%/entity/*}
 iplate=${tmp_path##*/}
 
-echo imodel $imodel iassem $iassem entity $entity
-echo skindk: $ifield-$iplate
-
-if [ -f ifield.txt ]; then
-    rm ifield.txt
-fi
-if [ -f iplate.txt ]; then
-    rm iplate.txt
-fi
-if [ -f imodel.txt ]; then
-    rm imodel.txt
-fi
-if [ -f iassem.txt ]; then
-    rm iassem.txt
-fi
-if [ -f iclass.txt ]; then
-    rm iclass.txt
-fi
-if [ -f iorder.txt ]; then
-    rm iorder.txt
-fi
-if [ -f entity.txt ]; then
-    rm entity.txt
-fi
+echo ifield $ifield iplate $iplate imodel $imodel iassem $iassem iclass $iclass iorder $iorder entity $entity
 
 entity_scripts_path=$imk_path/src/scripts/entity
 
@@ -57,6 +34,13 @@ do
         rm $file
     fi
 done < $entity_scripts_path/anima.txt
+
+if [ -f entity.jconfig ]; then
+    rm entity.jconfig
+fi
+if [ -f entity.sconfig ]; then
+    rm entity.sconfig
+fi
 
 if [ -f Icoupig ]; then
     rm Icoupig

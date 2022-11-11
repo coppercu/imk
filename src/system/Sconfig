@@ -1,0 +1,6 @@
+menu "system"
+
+rsource "config/affirm"
+rsource "config/couper"
+
+endmenu
