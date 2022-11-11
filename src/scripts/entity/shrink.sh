@@ -23,10 +23,6 @@ echo ifield $ifield iplate $iplate imodel $imodel iassem $iassem iclass $iclass 
 
 entity_scripts_path=$imk_path/src/scripts/entity
 
-# 更新ignore文件
-find $entity_scripts_path/anima/ -type f | cut -d / -f 10 | sed -e 's/^/\//g' > .gitignore
-# 更新anima.txt列表文件
-find $entity_scripts_path/anima/ -type f | cut -d / -f 10 > $entity_scripts_path/anima.txt
 # 更加anima.txt文件拷贝到entity的工作目录
 while read file
 do
