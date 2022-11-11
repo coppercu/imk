@@ -175,8 +175,8 @@ echo "rsource \"Sconfig.root\"" >> Icoupig
 # if [ -n $couple ]; then
 # fi
 
-echo "/Icoupig" >> .config
-echo "/Icoupig" >> .config.old
+echo ".config" >> .gitignore
+echo ".config.old" >> .gitignore
 
 echo "/Icoupig" >> .gitignore
 echo "/Iconfig_master" >> .gitignore
