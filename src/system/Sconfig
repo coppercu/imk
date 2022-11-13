@@ -1,12 +1,8 @@
-menuconfig SYSTEM
-    bool "system"
-    default y
-    help
-        system layer
+menu "system"
 
-if SYSTEM
-    rsource "config/affirm"
-    rsource "config/couper"
-    rsource "config/wclock"
-    rsource "config/hinger"
-endif
+rsource "config/affirm"
+rsource "config/couper"
+rsource "config/wclock"
+rsource "config/hinger"
+
+endmenu

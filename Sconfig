@@ -3,14 +3,8 @@
 # imk的Sconfig
 #
 
-menuconfig IMK
-    bool
-    prompt "imk"
-    help
-        imk
-
-if IMK
+menu "imk"
 
 rsource "src/Sconfig"
 
-endif
+endmenu

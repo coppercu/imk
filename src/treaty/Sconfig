@@ -1,8 +1,2 @@
-menuconfig TREATY
-    bool "treaty"
-    default y
-    help
-        treaty layer
-
-if TREATY
-endif
+menu "treaty"
+endmenu

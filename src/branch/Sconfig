@@ -1,8 +1,2 @@
-menuconfig BRANCH
-    bool "branch"
-    default y
-    help
-        branch layer
-
-if BRANCH
-endif
+menu "branch"
+endmenu
