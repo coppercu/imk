@@ -1,8 +1,39 @@
 menu "system"
 
-rsource "config/affirm"
-rsource "config/couper"
-rsource "config/wclock"
-rsource "config/hinger"
+menuconfig AFFIRM
+    bool "affirm"
+    default y
+    help
+        affirm连接
+if AFFIRM
+    rsource "config/affirm"
+endif
+
+menuconfig COUPER
+    bool "couper"
+    default y
+    help
+        couper连接
+if COUPER
+    rsource "config/couper"
+endif
+
+menuconfig WCLOCK
+    bool "wclock"
+    default y
+    help
+        wclock连接
+if WCLOCK
+    rsource "config/wclock"
+endif
+
+menuconfig HINGER
+    bool "hinger"
+    default y
+    help
+        hinger连接
+if HINGER
+    rsource "config/hinger"
+endif
 
 endmenu
