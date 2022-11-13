@@ -1,5 +1,0 @@
-menuconfig AFFIRM
-    bool "affirm"
-    default y
-    help
-        affirm连接

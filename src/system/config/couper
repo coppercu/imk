@@ -1,5 +1,0 @@
-menuconfig COUPER
-    bool "couper"
-    default y
-    help
-        couper连接

@@ -129,8 +129,7 @@ IASSEM := $iassem
 ICLASS := $iclass
 IORDER := $iorder
 ENTITY := $entity
-SKINIO := $skinio
-" > entity.sconfig
+SKINIO := $skinio" > entity.sconfig
 
 echo "
 config ROOT

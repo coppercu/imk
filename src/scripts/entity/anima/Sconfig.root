@@ -7,7 +7,7 @@ rsource "entity.sconfig"
 
 mainmenu "$(IFIELD)-$(IPLATE)-$(IMODEL)-$(IASSEM)-$(ICLASS)-$(IORDER)-$(ENTITY)"
 
-menu "root配置"
+menu "root"
 
 config IFIELD
     string "ifield"
@@ -40,12 +40,12 @@ config SKINIO
 endmenu
 
 rsource "Sconfig"
+rsource "../../../../../../branch/iclass/$(ICLASS)/Sconfig"
+rsource "../../../../../../branch/iorder/$(IORDER)/Sconfig"
+
 rsource "../Sconfig"
 rsource "../../Sconfig"
 rsource "../../../Sconfig"
-
-rsource "../../../../../../branch/iclass/$(ICLASS)/Sconfig"
-rsource "../../../../../../branch/iorder/$(IORDER)/Sconfig"
 
 rsource "../../../../../../skinio/$(SKINIO)/Sconfig"
 
