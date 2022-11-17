@@ -1,2 +1,5 @@
 menu "skinio"
+
+rsource "config/share"
+
 endmenu

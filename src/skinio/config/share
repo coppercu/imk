@@ -1,0 +1,80 @@
+
+menuconfig SKINIO_KERN
+    bool "skinio_kern"
+    default y
+    help
+        skinio_kern
+if SKINIO_KERN
+endif
+
+menuconfig SKINIO_ROAM
+    bool "skinio_roam"
+    default y
+    help
+        skinio_roam: 如果应用运行在linux系统上，在系统处于半休眠状态时，会有走快走慢的情况，这里提供一个任务对接机制跟随系统的运行步调
+if SKINIO_ROAM
+endif
+
+menuconfig SKINIO_TICKER
+    bool "skinio_ticker"
+    default y
+    help
+        skinio_ticker
+if SKINIO_TICKER
+endif
+
+menuconfig SKINIO_WORKER
+    bool "skinio_worker"
+    default y
+    help
+        skinio_worker
+if SKINIO_WORKER
+endif
+
+menuconfig SKINIO_TASKER
+    bool "skinio_tasker"
+    default y
+    help
+        skinio_tasker
+if SKINIO_TASKER
+endif
+
+menuconfig SKINIO_VITAER
+    bool "skinio_vitaer"
+    default y
+    help
+        skinio_vitaer
+if SKINIO_VITAER
+endif
+
+menuconfig SKINIO_UPDATE
+    bool "skinio_update"
+    default y
+    help
+        skinio_update
+if SKINIO_UPDATE
+endif
+
+menuconfig SKINIO_IRTC
+    bool "skinio_irtc"
+    default y
+    help
+        skinio_irtc
+if SKINIO_IRTC
+endif
+
+menuconfig SKINIO_XRTC
+    bool "skinio_xrtc"
+    default y
+    help
+        skinio_xrtc
+if SKINIO_XRTC
+endif
+
+menuconfig SKINIO_WATCHDOG
+    bool "skinio_watchdog"
+    default y
+    help
+        skinio_watchdog
+if SKINIO_WATCHDOG
+endif
